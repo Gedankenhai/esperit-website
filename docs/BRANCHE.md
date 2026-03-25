@@ -13,7 +13,7 @@ firmenname: "EsperIT"
 inhaber: "Frank Esper"
 rechtsform: "Einzelunternehmer"
 gruendungsjahr: 2001
-telefon: "0177 2578260"
+telefon: "+49 177 2578260"
 email: "info@esperit.net"
 website: "www.esperit.net"
 strasse: "Kastanienstrasse 8"
@@ -91,7 +91,7 @@ lead_magnet: true
 headline: "Sie möchten Prozesse in Ihrem Unternehmen automatisieren?"
 subline: "Ich unterstütze Sie dabei, Ihre Unternehmensprozesse zu analysieren, Automatisierungsvorschläge zu erarbeiten und zu implementieren."
 cta_primary:  { text: "Beratungstermin anfragen", href: "/kontakt" }
-cta_secondary: { text: "Jetzt anrufen", href: "tel:01772578260" }
+cta_secondary: { text: "Jetzt anrufen", href: "tel:+491772578260" }
 
 # [INHALT] Trust-Badges (4 Stück im Hero)
 badges:
@@ -140,7 +140,7 @@ faq_assistent:
 cta_banner:
   headline: "Bereit für Ihr Projekt?"
   cta_primary:  { text: "Beratungstermin anfragen", href: "/kontakt" }
-  cta_secondary: { text: "0177 2578260", href: "tel:01772578260" }
+  cta_secondary: { text: "+49 177 2578260", href: "tel:+491772578260" }
 ```
 
 ---

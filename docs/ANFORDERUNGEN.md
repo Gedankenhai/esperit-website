@@ -283,7 +283,7 @@ Beispiel `llms.txt`:
 > IT-Beratung für Data Warehouse, Business Intelligence und KI-Automatisierung.
 
 Frank Esper ist selbständiger IT-Berater mit Sitz in Weyhe (PLZ 28844).
-Erreichbar unter: info@esperit.net | 0177 2578260
+Erreichbar unter: info@esperit.net | +49 177 2578260
 Deutschlandweit remote, PLZ-Bereich 2* in Präsenz.
 
 ### Leistungen

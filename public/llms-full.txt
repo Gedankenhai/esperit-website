@@ -1,0 +1,155 @@
+# EsperIT – Frank Esper | Vollständige Inhaltsbeschreibung
+
+> IT-Beratung für Data Warehouse, Business Intelligence und KI-Automatisierung.
+> Diese Datei enthält den vollständigen maschinenlesbaren Inhalt der Website www.esperit.net.
+
+---
+
+## Unternehmen
+
+- Name: EsperIT
+- Inhaber: Frank Esper
+- Rechtsform: Einzelunternehmer
+- Gründungsjahr: 2001
+- Adresse: Kastanienstrasse 8, 28844 Weyhe
+- Telefon: +49 177 2578260
+- E-Mail: info@esperit.net
+- Website: www.esperit.net
+- Erreichbarkeit: Mo–Fr 09:00–19:00 Uhr
+- XING: https://www.xing.com/profile/Frank_Esper
+- LinkedIn: https://www.linkedin.com/in/frank-esper/
+- Einsatzgebiet: Deutschlandweit remote; PLZ-Bereich 2* in Präsenz
+
+---
+
+## Über Frank Esper
+
+Frank Esper ist selbständiger IT-Berater mit über 24 Jahren Berufserfahrung und mehr als 15 abgeschlossenen Projekten. Er bezeichnet sich selbst als BI- und DWH-Experte, AI-Enthusiast und Brückenbauer – mit dem Ziel, Menschen und Technik, Strategie und Taktik, Ausdauer und Disziplin zusammenzubringen.
+
+### Rollen
+
+- Business-Analyst: Erstellung von Schema- und Applikationsobjekten, semantischem Modell, Integration von Business-Logik, KPI-Management.
+- Datenmodellierer: ER-Modellierung, Semantic-Layer, Datamart-Entwicklung, Query-Optimierung, DBT-Scripts, Data-Lineage.
+- Projektleiter: Bedarfsanalyse, Fachfeinkonzepte, Ressourcenplanung, Aufwandsschätzung, Change- und Releasemanagement.
+- Tester: Testkonzepte, Unit- und Regressionstests, Qualitätsmanagement.
+- Administrator: User-Management, Security, Performance, Lizenz-Management, Monitoring.
+
+### Qualifikationen
+
+Change- und Release-Management, Deployment-Management, Test- und Qualitätsmanagement, Service-Transition, Metriken & Reporting, DWH-Architektur & Datenmodellierung, Datenqualität & Data Governance, Performance Engineering, BI/Analytics Enablement, Scrum.
+
+### Projektstationen
+
+1. HDI – Datenmodellierer, MicroStrategy-Designer und Administrator, PowerBI-Designer. Datenmodellierung in Exasol, Oracle und Snowflake. Agiles Arbeiten nach Scrum.
+2. HannoverRück – Datenmodellierer und MicroStrategy-Designer. Migration von SAP BO nach MicroStrategy. Datenmodellierung in Exasol und Oracle.
+3. CBR Fashion (Cecil, Street One) – MicroStrategy-Administrator. User-Management, LDAP, Prozessautomatisierung, Alerting.
+4. KfW Bank – MicroStrategy-Entwickler. Betreuung mit SAP/BW-Anbindung, Migration nach SAP BO, Projektverantwortung (~20 Mitarbeiter).
+
+---
+
+## Leistungen
+
+### DataWarehouse (https://www.esperit.net/leistungen/datawarehouse)
+
+Planung, Konzeption, Implementierung, Wartung, Überwachung.
+
+Kundenprobleme:
+- Kennzahlen (Umsatz, Marge, Kosten, Profitabilität) sind nicht vertrauenswürdig.
+- Antworten auf wichtige Fragen kommen zu langsam.
+- Operative Entscheidungen können nicht datenbasiert getroffen werden.
+
+Lösungen:
+- Datenbereinigung, Vereinheitlichung, Verprobung: Gemeinsames KPI-Verständnis, Harmonisierung, Qualitätschecks.
+- SQL-Optimierung, Semanticlayer und Self-Service-Berichte: Optimierte Abfragen, Fachbereiche können Standardfragen selbst beantworten.
+- Zusammenhänge sichtbar machen: Verknüpfung von CRM/ERP/Finance/Support über gemeinsame Schlüssel.
+
+### Business Intelligence (https://www.esperit.net/leistungen/business-intelligence)
+
+Bedarfsanalyse, Konzeption, Design, Administration, Monitoring.
+
+Kundenprobleme:
+- Entscheidungen aus dem Bauch, weil niemand schnell sieht was passiert.
+- Excel-Zusammenkopieren – alle schauen auf andere Zahlen.
+- Probleme und Chancen werden zu spät erkannt.
+
+Lösungen:
+- Management-Dashboard: Zentrales Cockpit, täglich automatisch aktualisiert.
+- DataLake – eine zentrale Wahrheit: Alle Quellen zusammen, dieselben Zahlen für alle.
+- Überwachung und automatisiertes Alerting: Warnmeldungen machen Auffälligkeiten sofort sichtbar.
+
+### Künstliche Intelligenz (https://www.esperit.net/leistungen/ki)
+
+Automatisierung von Prozessen in einem DSGVO-konformen Umfeld.
+
+Kundenprobleme:
+- Mitarbeitende verbringen zu viel Zeit mit Routineaufgaben (E-Mails, Tickets, Angebote).
+- Kundenservice-Anfragen sind teuer wegen immer derselben Fragen.
+- Fehler werden zu spät erkannt und verursachen hohe Folgekosten.
+
+Lösungen:
+- Automatisierung von Routineaufgaben: KI übernimmt Routinearbeiten mit klaren Regeln und menschlicher Freigabe.
+- Selbständiger Antwortgeber: KI beantwortet Standardfragen, leitet Sonderfälle weiter.
+- Überwachung: KI meldet Auffälligkeiten früh mit verständlicher Begründung.
+
+---
+
+## Service
+
+### KI-Schulungen (https://www.esperit.net/service/ki-schulungen)
+
+Maßgeschneiderte Schulungen für Teams. Jede Schulung wird auf die spezifischen Anforderungen des Unternehmens zugeschnitten. Ziel: Automatisierung von Routineaufgaben, Effizienzsteigerung, Steigerung der Produktivität.
+
+### KI-Assistenten (https://www.esperit.net/service/ki-assistenten)
+
+9 spezialisierte KI-Assistenten für typische Unternehmensaufgaben:
+
+1. Vertragszusammenfassung (https://www.esperit.net/service/ki-assistenten/vertragszusammenfassung): Erstellt verständliche Zusammenfassungen von Vertragstexten. Kein Ersatz für Rechtsberatung.
+2. EU AI Act Experte (https://www.esperit.net/service/ki-assistenten/eu-ai-act-experte): Beantwortet Fragen zur EU-KI-Verordnung, unterstützt bei Risikoklassifizierung.
+3. Datenschutz-Prüfer (https://www.esperit.net/service/ki-assistenten/datenschutzprufer): Prüft Datenschutzdokumente nach DSGVO-Standards, erstellt Bewertungsberichte.
+4. SEO Keyword-Recherche (https://www.esperit.net/service/ki-assistenten/seo-keyword-recherche): Identifiziert relevante Keywords, analysiert Suchintentionen, erstellt Cluster.
+5. Pro/Kontra-Analyst (https://www.esperit.net/service/ki-assistenten/pro-kontra-analyst): Erstellt ausgewogene Pro/Kontra-Listen für Entscheidungsfindungen.
+6. LinkedIn Profil Optimierung (https://www.esperit.net/service/ki-assistenten/linkedin-profil-optimierer): Verbessert Headline, Info-Text und Berufserfahrung auf LinkedIn.
+7. Kunden-Feedback-Analyse (https://www.esperit.net/service/ki-assistenten/kundenfeedback-analyst): Analysiert Kundenfeedback, entwickelt datenbasierte Marketingstrategien.
+8. Vergleich von Angeboten (https://www.esperit.net/service/ki-assistenten/angebotsvergleich): Objektiver Angebotsvergleich mit Bewertungsmatrix und Handlungsempfehlung.
+9. Hook Writer (https://www.esperit.net/service/ki-assistenten/hook-writer): Generiert virale Social Media Hooks und Attention Grabber.
+
+### Consulting & Workshops (https://www.esperit.net/service/consulting-workshops)
+
+CONSULTING (flexible Beauftragung): Unterstützung als PoC, Machbarkeitsanalyse oder Konzeption/Durchführung einer Projektphase. Kombination aus kaufmännischem Wissen und technologischer Expertise.
+
+WORKSHOP (1–2 Tage): Erarbeitung von Ideen zu Problemstellungen, Use Cases für Automatisierung, Software-Einarbeitungskonzepte anhand realer Arbeitsgrundlagen.
+
+---
+
+## Marketplace
+
+### AI Tools Katalog (https://www.esperit.net/marketplace/ai-tools-katalog)
+
+Aktuelle Übersicht empfehlenswerter KI-Tools nach Einsatzbereich. Laufend aktualisiert.
+
+### AI Use Cases pro Abteilung (https://www.esperit.net/marketplace/ai-use-cases)
+
+KI-Anwendungsfälle strukturiert nach Unternehmensbereichen. Praxisnah und umsetzbar.
+
+---
+
+## Blog / News & Insights (https://www.esperit.net/news)
+
+Beiträge zu Data Warehouse, Business Intelligence und KI-Automatisierung von Frank Esper.
+
+---
+
+## Kontakt (https://www.esperit.net/kontakt)
+
+Telefon: +49 177 2578260
+E-Mail: info@esperit.net
+Adresse: Kastanienstrasse 8, 28844 Weyhe
+Erreichbarkeit: Mo–Fr 09:00–19:00 Uhr
+
+---
+
+## Rechtliches
+
+- Impressum: https://www.esperit.net/impressum
+- Datenschutzerklärung: https://www.esperit.net/datenschutz
+- AGB: https://www.esperit.net/agb
