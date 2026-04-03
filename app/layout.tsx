@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CookieBanner } from "@/components/shared/CookieBanner";
 import { FloatingCTA } from "@/components/shared/FloatingCTA";
+import { Analytics } from "@vercel/analytics/react";
 import { siteConfig } from "@/lib/config";
 
 const fontSans = DM_Sans({
@@ -158,6 +159,7 @@ export default function RootLayout({
         <Footer />
         <CookieBanner />
         <FloatingCTA />
+        <Analytics />
       </body>
     </html>
   );
