@@ -1,0 +1,42 @@
+# EsperIT – Frank Esper
+
+> IT-Beratung für Data Warehouse, Business Intelligence und KI-Automatisierung.
+
+Frank Esper ist selbständiger IT-Berater mit Sitz in Weyhe (PLZ 28844), gegründet 2001.
+Erreichbar unter: info@esperit.net | +49 177 2578260
+Deutschlandweit remote, PLZ-Bereich 2* in Präsenz.
+Öffnungszeiten: Mo–Fr 09:00–19:00 Uhr
+
+## Leistungen
+
+- [DataWarehouse](https://www.esperit.net/leistungen/datawarehouse): Planung, Konzeption, Implementierung, Wartung und Überwachung von Datenmodellen.
+- [Business Intelligence](https://www.esperit.net/leistungen/business-intelligence): Bedarfsanalyse, Konzeption, Design, Administration und Monitoring von BI-Lösungen.
+- [Künstliche Intelligenz](https://www.esperit.net/leistungen/ki): Automatisierung von Unternehmensprozessen in einem DSGVO-konformen Umfeld.
+
+## Service
+
+- [KI-Schulungen](https://www.esperit.net/service/ki-schulungen): Maßgeschneiderte Schulungen für Teams – praxisnah, direkt anwendbar.
+- [KI-Assistenten](https://www.esperit.net/service/ki-assistenten): 9 spezialisierte KI-Assistenten für typische Unternehmensaufgaben.
+- [Consulting & Workshops](https://www.esperit.net/service/consulting-workshops): Flexible Beratung als PoC, Machbarkeitsanalyse oder 1–2-Tage-Workshop.
+
+## Marketplace
+
+- [AI Tools Katalog](https://www.esperit.net/marketplace/ai-tools-katalog): Übersicht empfehlenswerter KI-Tools nach Einsatzbereich.
+- [AI Use Cases](https://www.esperit.net/marketplace/ai-use-cases): KI-Anwendungsfälle strukturiert nach Unternehmensbereichen.
+
+## Über Frank Esper
+
+- [Qualifikationen](https://www.esperit.net/ueber-mich/qualifikationen): DWH-Architektur, Datenmodellierung, BI/Analytics, Change Management, Scrum u. v. m.
+- [Rollen & Aufgaben](https://www.esperit.net/ueber-mich/rollen): Business-Analyst, Datenmodellierer, Projektleiter, Tester, Administrator.
+- [Stationen & Projekte](https://www.esperit.net/ueber-mich/stationen): HDI, HannoverRück, CBR Fashion, KfW Bank.
+
+## Kontakt
+
+- [Kontaktformular](https://www.esperit.net/kontakt)
+- [News & Insights](https://www.esperit.net/news)
+
+## Rechtliches
+
+- [Impressum](https://www.esperit.net/impressum)
+- [Datenschutz](https://www.esperit.net/datenschutz)
+- [AGB](https://www.esperit.net/agb)

@@ -5,8 +5,8 @@ import { postType } from "./schemaTypes/post";
 export default defineConfig({
   name: "esperit-website",
   title: "EsperIT Blog",
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: "d5f61lrs",
+  dataset: "production",
   plugins: [structureTool()],
   schema: {
     types: [postType],

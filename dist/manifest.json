@@ -1,0 +1,14 @@
+{
+  "name": "EsperIT – Frank Esper",
+  "short_name": "EsperIT",
+  "description": "IT-Beratung für Data Warehouse, Business Intelligence und KI-Automatisierung.",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#132947",
+  "background_color": "#ffffff",
+  "lang": "de",
+  "icons": [
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
