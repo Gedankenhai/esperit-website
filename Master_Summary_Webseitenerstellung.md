@@ -2,15 +2,16 @@
 # EsperIT Website – Projektzusammenfassung
 
 **Erstellt:** März 2026
-**Zuletzt aktualisiert:** 25. März 2026
+**Zuletzt aktualisiert:** 13. April 2026
 **Projektinhaber:** Frank Esper / EsperIT
 **Domain:** www.esperit.net
+**Status:** ✅ Live und in Betrieb
 
 ---
 
 ## 1. MISSION
 
-Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unter der bestehenden Domain `www.esperit.net`. Die Website dient der Lead-Generierung, Darstellung von Expertise und Vermarktung von Dienstleistungen im Bereich Data Warehouse, Business Intelligence, KI-Beratung und KI-Schulungen.
+Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unter der Domain `www.esperit.net`. Die Website dient der Lead-Generierung, Darstellung von Expertise und Vermarktung von Dienstleistungen im Bereich Data Warehouse, Business Intelligence, KI-Beratung und KI-Schulungen.
 
 ---
 
@@ -23,6 +24,7 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 - Keine Emojis in Headlines
 - Kein Hardcoding von Firmendaten – alles über `lib/config.ts`
 - Mehrsprachigkeit (DE/EN): Architektur vorbereitet, Schalter im Header deaktiviert, Feature-Flag `i18n: false`
+- Telefonnummer im internationalen Format: `+49 177 2578260`
 
 ### Design
 - Design-System aus `docs/DESIGNSYSTEM.md` ist bindend
@@ -34,27 +36,36 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 
 ### Technik
 - `"use client"` nur wo zwingend nötig (Formulare, Animationen, Cookie-Banner)
-- `.env.local` niemals in Git committen
+- `.env.local` niemals in Git committen (steht in `.gitignore`)
 - ISR/SSG bevorzugen, Sanity-Abfragen mit `revalidate: 3600` cachen
 - Kein Code ohne vorherige Systemprüfung
 - Security Headers in `next.config.ts` (X-Frame-Options, CSP, etc.)
+- `cdn.sanity.io` ist als erlaubte Bildquelle in `next.config.ts` eingetragen (remotePatterns + CSP img-src)
 - Spam-Schutz Kontaktformular: Honeypot-Feld + Rate Limiting (kein CAPTCHA)
 - Error Handling: `app/not-found.tsx` + `app/error.tsx` + API-Fehlerbehandlung
 - Accessibility: WCAG 2.1 AA Mindeststandard
 - RSS-Feed: `app/feed.xml/route.ts` für Blog (automatisch aus Sanity)
 - Health-Check: `app/api/health/route.ts`
 - LLM-Auffindbarkeit: `public/llms.txt` + `public/llms-full.txt`
-- Marketplace: lokale Excel-Dateien via SheetJS (kein Google Sheets iframe mehr)
+- Marketplace: lokale Excel-Dateien via SheetJS (kein Google Sheets iframe)
+- Dropdown-Menüs: Toggle-Logik via `onClick` + `document mousedown` EventListener (funktioniert in Safari und Chrome)
+- `dist/` und `.sanity/` sind in `.gitignore` eingetragen
 
-### Kosten
-- Vercel Free/Hobby Plan
-- Sanity Free Plan (3 Nutzer, 10 GB)
-- Resend Free Plan (3.000 E-Mails/Monat)
-- SheetJS für Marketplace (lokal, kostenlos – ersetzt Google Sheets Embed)
-- Cal.com Free Plan (Terminbuchung, noch einzurichten)
-- Keine externen Paid-APIs
-- **Modell für Claude Code: Claude Sonnet 4.6** ($3 Input / $15 Output pro MTok)
-- Tatsächliche Entwicklungskosten bis März 2026: ca. $12–13 (API-Billing)
+### Kontaktformular
+- Resend sendet direkt an `fesper@gmx.de` (CONTACT_EMAIL_TO)
+- Absender: `info@esperit.net`
+- replyTo: E-Mail-Adresse des Kontaktformular-Absenders
+- Kein Umweg über WebHostOne-Weiterleitung
+
+### Kosten (laufend)
+- **INWX Domain** `esperit.net`: ca. 18–19 € pro Jahr
+- **Vercel** Hosting: kostenlos (Hobby Plan)
+- **Sanity.io** CMS: kostenlos (Free Plan, 3 Nutzer, 10 GB)
+- **Resend** E-Mail: kostenlos (bis 3.000 E-Mails/Monat)
+- **Cal.eu** Terminbuchung: kostenlos (Free Plan)
+- **GitHub** Repository: kostenlos
+- **Claude Code** (nur bei aktiver Entwicklung): ca. $3–15 pro Entwicklungsmonat
+- Tatsächliche Entwicklungskosten bis April 2026: ca. $12–15 (API-Billing)
 
 ### Claude Code Verhalten
 - Erst alle docs/-Dateien lesen, dann fragen, dann Code schreiben
@@ -65,7 +76,8 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 - Mehrere zusammenhängende Aufgaben in einem Schritt zusammenfassen
 - Tests nur wenn weiteres Vorgehen davon abhängt
 - Testdateien sofort nach erfolgreichem Test löschen
-- Bei Korrekturen: nur betroffenen Codeabschnitt zeigen, nicht gesamte Datei
+- Bei Korrekturen: vollständiges überarbeitetes Script liefern, keine Code-Fragmente zum Ersetzen
+- `.env.local` niemals in Git committen – Änderungen an Umgebungsvariablen immer zusätzlich manuell in Vercel Dashboard eintragen
 
 ---
 
@@ -83,23 +95,23 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 | GitHub Repository | `https://github.com/Gedankenhai/esperit-website` (privat) ✅ |
 | Vercel Account | eingerichtet ✅ |
 | Sanity Account | eingerichtet ✅ |
-| Resend Account | eingerichtet ✅ (Domain-Verifizierung in Arbeit) |
-| Cal.com Account | noch nicht eingerichtet ⬜ |
+| Resend Account | eingerichtet ✅, Domain verifiziert ✅ |
+| Cal.eu Account | eingerichtet ✅ (`https://cal.eu/frank-esper`) |
 | Anthropic Console | eingerichtet ✅, Spending Limit: $30/Monat |
 
 ### Domain / Hosting
-- `esperit.net` ist bei WebHostOne als **Inklusivdomain** registriert (nicht separat)
-- E-Mail `frank.esper@esperit.net` als Kontaktformular-Zieladresse definiert
-- Resend Domain-Verifizierung läuft: DNS-Einträge bei WebHostOne werden eingetragen
+- `esperit.net` ist bei **INWX** registriert (Transfer von WebHostOne abgeschlossen April 2026)
+- Nameserver: `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu`
+- Domain läuft bis: **15. April 2027** (Auto Renew aktiv)
+- WebHostOne: Domain gekündigt ✅, Hosting-Paket gekündigt zum 20.07.2026 ✅
+- Kontaktformular sendet direkt an `fesper@gmx.de` via Resend
 
-### Korrigierte Reihenfolge Domain-Transfer zu INWX
-1. DNS-Einträge für Resend bei WebHostOne eintragen (aktuell in Arbeit)
-2. Website fertigstellen und zu Vercel deployen
-3. Bei INWX Domain `esperit.net` vorregistrieren
-4. Bei WebHostOne **nur die Domain kündigen** (nicht das Hosting-Paket!)
-5. AuthCode von WebHostOne erhalten → bei INWX eingeben
-6. Transfer abwarten (5–7 Tage) → Resend DNS-Einträge bei INWX neu eintragen
-7. Erst nach erfolgtem Transfer: WebHostOne Hosting-Paket kündigen
+### Vercel Umgebungsvariablen (eingetragen im Dashboard)
+- `RESEND_API_KEY`
+- `CONTACT_EMAIL_TO` = `fesper@gmx.de`
+- `NEXT_PUBLIC_SANITY_PROJECT_ID` = `d5f61lrs`
+- `NEXT_PUBLIC_SANITY_DATASET` = `production`
+- `SANITY_API_TOKEN`
 
 ---
 
@@ -119,7 +131,8 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 | Lucide React | latest | Icons | kostenlos |
 | SheetJS (xlsx) | latest | Excel-Rendering Marketplace | kostenlos |
 | Vercel | – | Hosting | Free/Hobby Plan |
-| Cal.com | – | Terminbuchung | Free Plan |
+| Cal.eu | – | Terminbuchung | Free Plan |
+| @vercel/analytics | latest | Web Analytics | kostenlos |
 
 ---
 
@@ -147,7 +160,7 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 │   └── /marketplace/ai-use-cases       (SheetJS Excel-Rendering, kein iframe)
 ├── /news                               (Sanity Blog + RSS-Feed)
 │   └── /news/[slug]
-├── /kontakt                            (+ Cal.com Terminbuchung)
+├── /kontakt                            (+ Cal.eu Terminbuchung)
 ├── /impressum
 ├── /datenschutz
 └── /agb
@@ -161,19 +174,20 @@ Aufbau einer professionellen IT-Beratungs-Website für EsperIT (Frank Esper) unt
 esperit-website/
 ├── CLAUDE_CODE_PROMPT.md              ← Einstiegs-Prompt für Claude Code
 ├── Master_Summary_Webseitenerstellung.md
+├── sanity.cli.ts                      ← Sanity CLI Konfiguration (projectId, dataset)
+├── sanity.config.ts                   ← Sanity Studio Konfiguration
 ├── .env.local                         ← API-Keys (niemals in Git!)
-├── .gitignore                         ← .env.local ausgeschlossen
+├── .gitignore                         ← .env.local, dist/, .sanity/ ausgeschlossen
 ├── package.json / package-lock.json   ← npm-Abhängigkeiten
-├── next.config.ts                     ← Next.js Konfiguration + Security Headers
+├── next.config.ts                     ← Next.js Konfiguration + Security Headers + Sanity CDN
 ├── tailwind.config.ts                 ← Tailwind-Konfiguration
 ├── tsconfig.json                      ← TypeScript-Konfiguration
 ├── components.json                    ← shadcn/ui Konfiguration
 ├── postcss.config.mjs                 ← PostCSS-Konfiguration
 ├── eslint.config.mjs                  ← ESLint-Konfiguration
 ├── next-env.d.ts                      ← Next.js TypeScript-Typen
-├── tsconfig.tsbuildinfo               ← TypeScript Build-Cache
 ├── app/                               ← Next.js App Router (alle Seiten)
-│   ├── layout.tsx                     ← Root Layout (Header + Footer)
+│   ├── layout.tsx                     ← Root Layout (Header + Footer + Vercel Analytics)
 │   ├── page.tsx                       ← Landingpage
 │   ├── ueber-mich/                    ← Über-mich-Hauptseite + Unterseiten
 │   ├── leistungen/                    ← Leistungsseiten
@@ -203,19 +217,20 @@ esperit-website/
 ├── .next/                             ← Next.js Build-Cache (nicht in Git)
 ├── .claude/                           ← Claude Code interne Konfiguration
 └── public/                            ← Statische Dateien
+    ├── og-image.jpg                   ← Social-Media Vorschaubild (1200×630px) ✅
     ├── downloads/
     │   ├── CV_Frank_Esper.pdf
     │   ├── DSGVO_Compliance_Check.pdf
-    │   ├── Handwerk_IT_Leitfaden.pdf   ← Verlinkung noch zuzuweisen
+    │   ├── Handwerk_IT_Leitfaden.pdf  ← Verlinkung noch offen
     │   ├── KI_FAQ_esperit.pdf
-    │   ├── KI-Tools-Matrix-2026.xlsx   ← Marketplace Tabelle 1
-    │   └── LLM-Matrix-2026.xlsx        ← Marketplace Tabelle 2
+    │   ├── KI-Tools-Matrix-2026.xlsx  ← Marketplace Tabelle 1
+    │   └── LLM-Matrix-2026.xlsx       ← Marketplace Tabelle 2
     └── images/
-        ├── firmenlogo.png              ← 879 KB (ggf. optimieren)
-        ├── frank-esper.jpg             ← Ursprungsfoto (18,7 MB, nicht mehr aktiv)
-        ├── F 032-25-006.jpg            ← Aktuelles Profilfoto (Hero + Über-mich)
-        └── logos/                     ← 9 Kundenlogos
-            ├── hdi.svg                ← Größenreferenz für alle anderen Logos
+        ├── firmenlogo.png             ← 879 KB
+        ├── frank-esper.jpg            ← Ursprungsfoto (18,7 MB) – Abhängigkeiten vorhanden, nicht löschen
+        ├── F 032-25-006.jpg           ← Aktuelles Profilfoto (Hero + Über-mich)
+        └── logos/                    ← 9 Kundenlogos
+            ├── hdi.svg               ← Größenreferenz für alle anderen Logos
             ├── hannover-re-vector-logo.png
             ├── kfw.svg
             ├── cbr-fashion.png
@@ -228,94 +243,64 @@ esperit-website/
 
 ---
 
-## 7. OFFENE PUNKTE
+## 7. SANITY BLOG – BEDIENUNG
 
-- [ ] Cal.com Account einrichten → URL in `lib/config.ts` → `terminbuchungUrl` eintragen
-- [ ] Resend Domain-Verifizierung (`esperit.net`) – DNS-Einträge bei WebHostOne eintragen (in Arbeit)
-- [ ] Sanity Project-ID in `.env.local` prüfen ob korrekt eingetragen
-- [ ] `Handwerk_IT_Leitfaden.pdf` – Verwendung/Verlinkung auf welcher Seite noch ungeklärt
-- [ ] `og-image.jpg` manuell erstellen (1200×630px, dunkelblauer Hintergrund #132947, Logo + Name) → in `public/` ablegen
-- [ ] `frank-esper.jpg` (18,7 MB) kann gelöscht werden – ersetzt durch `F 032-25-006.jpg`
-- [ ] Kontaktformular testen sobald Resend Domain-Verifizierung abgeschlossen
-- [ ] Domain-Transfer zu INWX (erst nach Fertigstellung – siehe korrigierte Reihenfolge in Abschnitt 3)
-- [ ] WebHostOne Hosting-Paket kündigen (erst nach erfolgtem Domain-Transfer)
+Das Sanity Studio ist deployed unter: **`https://esperit.sanity.studio/`**
 
----
-
-## 8. BEREITS ERLEDIGTE SCHRITTE
-
-- [x] Webseiten-Struktur definiert (`docs/BRANCHE.md`)
-- [x] Tech-Stack festgelegt
-- [x] Hosting-Entscheidung getroffen (Vercel)
-- [x] Blog-Lösung festgelegt (Sanity.io)
-- [x] Vercel Account eingerichtet
-- [x] Sanity Account eingerichtet
-- [x] Resend Account eingerichtet
-- [x] GitHub Account + Repository `esperit-website` eingerichtet (privat)
-- [x] Projektordner mit Git initialisiert und mit GitHub verbunden
-- [x] Google Sheets für Marketplace vorbereitet (werden nicht mehr eingebettet – lokale xlsx stattdessen)
-- [x] Alle docs/-Dateien erstellt und bereinigt
-- [x] Next.js Projekt-Scaffold erstellt (alle Abhängigkeiten installiert)
-- [x] `lib/config.ts`, `lib/animations.ts`, `lib/services-data.ts`, `lib/assistants-data.ts` erstellt
-- [x] Shared Components erstellt (RevealOnScroll, FloatingCTA, CookieBanner)
-- [x] Layout erstellt (Header mit funktionierenden Dropdowns, Footer, MobileNav)
-- [x] Landingpage vollständig implementiert (alle Sektionen)
-- [x] Über-mich-Unterseiten implementiert (Qualifikationen, Rollen, Stationen)
-- [x] Leistungs-Unterseiten implementiert
-- [x] Service-Unterseiten implementiert (KI-Schulungen, KI-Assistenten mit 9 Einzelseiten, Consulting)
-- [x] Marketplace umgebaut auf SheetJS (lokale Excel-Dateien, kein Google Sheets iframe)
-- [x] Blog-Seite implementiert (Sanity-Anbindung)
-- [x] Kontaktformular implementiert (Resend + Honeypot)
-- [x] Rechtliche Seiten implementiert (Impressum, Datenschutz, AGB)
-- [x] SEO implementiert (Metadata, Sitemap, Robots, llms.txt)
-- [x] Error Pages implementiert (404, 500)
-- [x] Security Headers in `next.config.ts`
-- [x] Health-Check Endpoint
-- [x] Dropdown-Menü-Bug behoben (Dropdowns erscheinen nun unter jeweiligem Menüpunkt)
-- [x] Hero-Bereich umgebaut auf zweispaltiges Layout (Text links, Foto rechts)
-- [x] Profilfoto ausgetauscht (neu: `F 032-25-006.jpg`)
-- [x] Kundenlogostreifen erweitert auf 9 Logos (alle auf HDI-Höhe skaliert)
-- [x] Hannover Re Logo ausgetauscht (png statt svg)
-- [x] Marketplace-Tabellen: Zeilenumbruch aktiviert, Spaltenbreiten definiert
-- [x] „Zurück zur Übersicht"-Link auf KI-Assistenten-Einzelseiten repositioniert
-- [x] `.env.local` angelegt mit allen notwendigen Variablen
-- [x] Website lokal lauffähig unter `http://localhost:3000`
+### Neuen Blogbeitrag erstellen
+1. `https://esperit.sanity.studio/` öffnen und einloggen
+2. Links „Blogbeitrag" anklicken → „+" klicken
+3. Felder ausfüllen:
+   - **Titel** (Pflicht) – Erscheint als H1 auf der Seite
+   - **Slug** (Pflicht) – „Generate" klicken, wird automatisch aus Titel erstellt
+   - **Veröffentlichungsdatum** (Pflicht) – Bestimmt Sortierung
+   - **Kurzbeschreibung** (empfohlen) – Für Übersicht und SEO
+   - **Titelbild** (empfohlen) – Vorschaubild des Beitrags
+   - **Alt-Text** (empfohlen) – Für SEO und Barrierefreiheit
+   - **Inhalt** (Pflicht) – Haupttext mit Formatierungsoptionen
+4. „Publish" klicken → Beitrag erscheint nach max. 1h auf `www.esperit.net/news`
+5. Bei sofortiger Anzeige: Vercel Redeploy anstoßen
 
 ---
 
-## 9. NÄCHSTER SCHRITT
+## 8. ERLEDIGTE SCHRITTE (vollständig)
 
-Claude Code im VS Code Terminal starten:
-
-```bash
-cd /Users/frankadmin/Documents/Homepage/esperit-website
-claude
-```
-
-Offene Baustellen in dieser Reihenfolge abarbeiten:
-1. Resend Domain-Verifizierung abschließen (DNS-Einträge bei WebHostOne)
-2. Kontaktformular testen
-3. `og-image.jpg` erstellen und in `public/` ablegen
-4. Cal.com einrichten
-5. `npm run build` + Lighthouse-Audit
-6. Vercel Deploy
-
----
-
-## 10. VERCEL DEPLOYMENT (noch ausstehend)
-
-Benötigte Umgebungsvariablen im Vercel Dashboard eintragen:
-- `RESEND_API_KEY`
-- `CONTACT_EMAIL_TO`
-- `NEXT_PUBLIC_SANITY_PROJECT_ID`
-- `NEXT_PUBLIC_SANITY_DATASET`
-- `SANITY_API_TOKEN`
-- `NEXT_PUBLIC_SHEETS_KI_TOOLS` (optional, falls noch benötigt)
-- `NEXT_PUBLIC_SHEETS_LLM_MATRIX` (optional, falls noch benötigt)
+- [x] Webseiten-Struktur definiert
+- [x] Tech-Stack festgelegt und implementiert
+- [x] Alle Seiten vollständig implementiert (39 statische Seiten)
+- [x] Kontaktformular implementiert (Resend + Honeypot) – sendet an `fesper@gmx.de`
+- [x] Resend Domain-Verifizierung abgeschlossen ✅
+- [x] Cal.eu Account eingerichtet (`https://cal.eu/frank-esper`) ✅
+- [x] `og-image.jpg` erstellt (aus Firmenlogo, 1200×630px) ✅
+- [x] Vercel Analytics eingebunden (`@vercel/analytics`) ✅
+- [x] Website deployed auf Vercel ✅
+- [x] Domain-Transfer `esperit.net` von WebHostOne zu INWX abgeschlossen ✅
+- [x] DNS-Einträge bei INWX eingetragen (Vercel A+CNAME, Resend DKIM+SPF+DMARC) ✅
+- [x] `www.esperit.net` in Vercel eingetragen, SSL-Zertifikat aktiv ✅
+- [x] WebHostOne Domain gekündigt ✅
+- [x] WebHostOne Hosting-Paket gekündigt zum 20.07.2026 ✅
+- [x] Impressum überarbeitet: Platzhalter entfernt, USt-ID entfernt, neue Abschnitte ergänzt, Haftungsausschluss ersetzt ✅
+- [x] Telefonnummer auf internationales Format `+49 177 2578260` umgestellt ✅
+- [x] Tab-Reihenfolge Kontaktformular korrigiert ✅
+- [x] Dropdown-Menü Chrome-Bug behoben (Toggle-Logik) ✅
+- [x] Sanity CDN als erlaubte Bildquelle in `next.config.ts` eingetragen ✅
+- [x] Sanity Studio deployed unter `https://esperit.sanity.studio/` ✅
+- [x] `sanity.cli.ts` mit hardcodierten Werten für CLI-Deploy erstellt ✅
+- [x] `dist/` und `.sanity/` aus Git-Tracking entfernt ✅
+- [x] Erster Blogbeitrag veröffentlicht ✅
 
 ---
 
-## 11. WIDERSPRÜCHE / BEREINIGUNGEN (Protokoll)
+## 9. OFFENE PUNKTE
+
+- [ ] `Handwerk_IT_Leitfaden.pdf` – Verlinkung auf welcher Seite noch inhaltlich ungeklärt
+- [ ] `frank-esper.jpg` (18,7 MB) – Claude Code hat Abhängigkeiten erkannt, noch nicht gelöscht
+- [ ] Kontaktformular mit echter Kundenanfrage final verifizieren
+- [ ] Lighthouse-Audit durchführen (Performance, SEO, Accessibility)
+
+---
+
+## 10. WIDERSPRÜCHE / BEREINIGUNGEN (Protokoll)
 
 | Problem | Lösung |
 |---|---|
@@ -324,8 +309,13 @@ Benötigte Umgebungsvariablen im Vercel Dashboard eintragen:
 | `BRANCHE.md` mischte Inhalt, Anweisungen, Layout ohne Kennzeichnung | Kennzeichnung mit `[INHALT]` / `[KONFIG]` |
 | Bewertungs-Sektion in ANFORDERUNGEN.md trotz Deaktivierung | Entfernt |
 | Trust-Bar hatte 4 Kennzahlen, nur 2 vorhanden | Auf 2 reduziert |
-| Google Sheets Embed: graue Balken, keine fixierten Spalten, Scrollbalken-Probleme | Ersetzt durch lokale Excel-Dateien via SheetJS |
+| Google Sheets Embed: Darstellungsprobleme | Ersetzt durch lokale Excel-Dateien via SheetJS |
 | Dropdown-Menüs erschienen immer links statt unter Menüpunkt | CSS-Fix: position relativ zum Trigger-Element |
 | Hero-Foto zeigte nur Torso | Zweispaltiges Layout, Foto rechtsbündig |
 | Domain-Transfer-Reihenfolge war falsch dokumentiert | Korrigiert: erst Domain kündigen, AuthCode erhalten, dann Transfer, zuletzt Hosting kündigen |
 | Kundenlogostreifen hatte 4 Logos unterschiedlicher Größe | Erweitert auf 9 Logos, alle auf HDI-Höhe vereinheitlicht |
+| Kontaktformular sendete an `frank.esper@esperit.net` via WebHostOne-Weiterleitung | Umgestellt auf direkten Versand an `fesper@gmx.de` via Resend |
+| Sanity Studio fehlte `sanity.cli.ts` mit projectId | Datei erstellt, Deploy erfolgreich |
+| Sanity Blog-Bilder wurden auf Website nicht angezeigt | `cdn.sanity.io` in `next.config.ts` als erlaubte Bildquelle eingetragen |
+| Dropdown-Menüs funktionierten in Chrome nicht korrekt | Toggle-Logik mit `document mousedown` EventListener implementiert |
+| Resend DMARC-Eintrag fehlte bei WebHostOne | Nachträglich eingetragen, dann bei INWX neu eingetragen |
