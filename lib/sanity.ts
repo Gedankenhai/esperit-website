@@ -26,6 +26,7 @@ export interface SanityPost {
   slug: { current: string };
   mainImage?: SanityImageSource;
   publishedAt: string;
+  _updatedAt?: string;
   excerpt?: string;
   body?: unknown[];
 }
@@ -48,6 +49,7 @@ export const postBySlugQuery = `
     slug,
     mainImage,
     publishedAt,
+    _updatedAt,
     excerpt,
     body
   }
