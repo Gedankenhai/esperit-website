@@ -16,36 +16,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Was ist der EU AI Act und betrifft er mein Unternehmen?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Der EU AI Act ist die weltweit erste umfassende KI-Regulierung und gilt ab 2026 für alle Unternehmen, die KI-Systeme in der EU einsetzen oder anbieten.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Welche KI-Tools sind für mein Unternehmen geeignet?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Das hängt von Ihren konkreten Anforderungen, Ihrer IT-Infrastruktur und Ihrem Budget ab. Im Rahmen eines Workshops oder einer Beratung analysiere ich Ihre Prozesse und empfehle passende, DSGVO-konforme Lösungen.",
-      },
-    },
-  ],
-};
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      {/* FAQ JSON-LD is generated inside `FaqSection` to avoid duplication */}
       <HeroSection />
       <TrustBar />
       <ReferenzenLogos />

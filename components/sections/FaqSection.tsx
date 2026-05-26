@@ -1,11 +1,7 @@
 
 import { Download, ExternalLink } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+// Switched to native <details>/<summary> so answers are present in the
+// delivered HTML and available to crawlers without JS.
 import { Button } from "@/components/ui/button";
 import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
@@ -38,9 +34,26 @@ const faqs = [
 ];
 
 export function FaqSection() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.frage,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.antwort,
+      },
+    })),
+  };
+
   return (
     <section aria-label="Häufige Fragen" className="bg-white py-16 md:py-20">
       <div className="mx-auto max-w-3xl px-4">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
         <RevealOnScroll>
           <h2 className="mb-3 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
             FAQs zum Thema Künstliche Intelligenz
@@ -52,22 +65,18 @@ export function FaqSection() {
         </RevealOnScroll>
 
         <RevealOnScroll delay={0.1}>
-          <Accordion type="single" collapsible className="space-y-2">
+          <div className="space-y-2">
             {faqs.map((faq, i) => (
-              <AccordionItem
-                key={i}
-                value={`item-${i}`}
-                className="border border-slate-200 px-4"
-              >
-                <AccordionTrigger className="text-left text-sm font-medium text-slate-800 hover:text-primary hover:no-underline py-4">
+              <details key={i} className="border border-slate-200 px-4">
+                <summary className="cursor-pointer text-left text-sm font-medium text-slate-800 hover:text-primary hover:no-underline py-4">
                   {faq.frage}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-slate-600 leading-relaxed pb-4">
+                </summary>
+                <div className="text-sm text-slate-600 leading-relaxed pb-4">
                   {faq.antwort}
-                </AccordionContent>
-              </AccordionItem>
+                </div>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </RevealOnScroll>
 
         <RevealOnScroll delay={0.2}>
