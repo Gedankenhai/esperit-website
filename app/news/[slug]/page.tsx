@@ -188,14 +188,14 @@ export default async function NewsDetailPage({
 
         {/* Titelbild */}
         {post.mainImage && (
-          <div className="relative h-64 w-full overflow-hidden bg-slate-100 md:h-96">
+          <div className="relative aspect-[2/1] w-full overflow-hidden bg-[#132947]">
             <Image
               src={urlFor(post.mainImage).width(1200).height(600).url()}
               alt={
                 (post.mainImage as { alt?: string })?.alt ?? post.title
               }
               fill
-              className="object-cover"
+              className="object-contain"
               priority
               sizes="100vw"
             />

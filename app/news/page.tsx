@@ -63,7 +63,7 @@ export default async function NewsPage() {
                   className="group block border border-slate-200 hover:border-primary/40 transition-colors"
                 >
                   {post.mainImage && (
-                    <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+                    <div className="relative aspect-[3/2] w-full overflow-hidden bg-[#132947]">
                       <Image
                         src={urlFor(post.mainImage).width(600).height(400).url()}
                         alt={
@@ -71,7 +71,7 @@ export default async function NewsPage() {
                           post.title
                         }
                         fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="object-contain transition-transform duration-300 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
