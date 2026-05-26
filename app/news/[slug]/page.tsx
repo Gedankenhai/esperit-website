@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { getBlogPostingJsonLd } from "@/lib/structured-data";
 import {
   client,
   postBySlugQuery,
@@ -34,16 +35,26 @@ export async function generateMetadata({
     });
     if (!post) return {};
     return {
-      title: `${post.title} | EsperIT`,
+      title: post.title,
       description: post.excerpt ?? "",
       alternates: { canonical: `/news/${slug}` },
       openGraph: post.mainImage
         ? {
+            title: post.title,
+            description: post.excerpt ?? "",
             images: [
               { url: urlFor(post.mainImage).width(1200).height(630).url() },
             ],
           }
         : undefined,
+      twitter: {
+        card: "summary_large_image",
+        title: post.title,
+        description: post.excerpt ?? "",
+        images: post.mainImage
+          ? [urlFor(post.mainImage).width(1200).height(630).url()]
+          : [],
+      },
     };
   } catch {
     return {};
@@ -137,18 +148,16 @@ export default async function NewsDetailPage({
     ],
   };
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
+  const articleJsonLd = getBlogPostingJsonLd({
+    title: post.title,
     description: post.excerpt ?? "",
     datePublished: post.publishedAt,
-    author: { "@type": "Person", name: "Frank Esper" },
-    publisher: { "@type": "Organization", name: "EsperIT" },
-    ...(post.mainImage && {
-      image: urlFor(post.mainImage).width(1200).height(630).url(),
-    }),
-  };
+    dateModified: post._updatedAt ?? post.publishedAt,
+    slug,
+    imageUrl: post.mainImage
+      ? urlFor(post.mainImage).width(1200).height(630).url()
+      : undefined,
+  });
 
   return (
     <>

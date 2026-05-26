@@ -7,7 +7,7 @@ import type { SanityPost } from "@/lib/sanity";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "News & Insights | EsperIT",
+  title: "News & Insights",
   description:
     "Aktuelle Beiträge zu Data Warehouse, Business Intelligence und KI-Automatisierung von Frank Esper.",
   alternates: { canonical: "/news" },
