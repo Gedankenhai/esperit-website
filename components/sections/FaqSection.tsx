@@ -7,110 +7,166 @@ import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
 const faqs = [
   {
-    frage: "Wie bleibe ich bei KI-Entwicklungen auf dem Laufenden?",
+    frage: "Welche konkreten Schutzmaßnahmen brauche ich, bevor KI-Tools auf Unternehmensdaten zugreifen?",
     antwortHtml: `
-      <p>Der Markt bewegt sich schnell – zu schnell, um ihn mit gelegentlichem Nachrichtenkonsum zu verfolgen. Ich persönlich schätze den Newsletter der <strong>Ainauten</strong> (<a href="https://www.ainauten.com/t/newsletter" target="_blank" rel="noopener noreferrer">ainauten.com</a>), der dreimal wöchentlich in kompakter Form über neue Modelle, Tools, Anwendungsbeispiele und Marktentwicklungen informiert – ohne den üblichen Hype-Überbau. Wer 5 Minuten investiert, ist auf dem Stand, der im Alltag zählt.</p>
-      <p><strong>Abonnement unter:</strong> <a href="https://www.ainauten.com/t/newsletter" target="_blank" rel="noopener noreferrer">https://www.ainauten.com/t/newsletter</a></p>
-    `,
-  },
-  {
-    frage: "Welche deutschen KI-Anbieter arbeiten DSGVO-konform?",
-    antwortHtml: `
-      <p>Die DSGVO-Konformität eines Dienstes ist keine binäre Eigenschaft – sie ist eine Frage der Architektur, der Vertragsgestaltung und der eingesetzten Basismodelle. Zwei in Deutschland angesiedelte Anbieter, die diesen Anspruch strukturell verfolgen, sind <strong>Langdock</strong> (<a href="https://langdock.com" target="_blank" rel="noopener noreferrer">langdock.com</a>) und <strong>InnoGPT</strong> (<a href="https://innogpt.de" target="_blank" rel="noopener noreferrer">innogpt.de</a>). Beide hosten in der EU und stellen Auftragsverarbeitungsverträge bereit.</p>
-      <p>DSGVO-konform bedeutet dabei nicht zwingend datensouverän. Sobald eine Anfrage an ein US-amerikanisches Basismodell weitergeleitet wird, endet die direkte Kontrolle des EU-Anbieters. Was bleibt, ist vertraglicher Schutz – kein technisch erzwungener Zustand. Wer mit sensiblen Unternehmensdaten arbeitet, sollte den Unterschied zwischen einem AVV mit einem US-Anbieter und echter Datensouveränität kennen. Letztere bieten derzeit nur lokal betriebene Open-Source-Modelle (z.B. Mistral oder Llama, betrieben über Ollama oder OpenWebUI) wirklich zuverlässig.</p>
-      <p>Inzwischen gibt es im deutschen Markt weitere vergleichbare Anbieter: DeutschlandGPT, Omnifact und Lurus – je nach Anforderungsprofil und Teamgröße mit unterschiedlichen Stärken. Eine aktuelle Marktübersicht ist ratsam, da sich Preise und Funktionsumfang schnell ändern.</p>
-    `,
-  },
-  {
-    frage: "Wie kann ich KI-Systeme verantwortungsvoll einsetzen?",
-    antwortHtml: `
-      <p>Die Frage lässt sich nicht mit einer einzigen Maßnahme beantworten – es geht um ein Bündel aufeinander abgestimmter Entscheidungen:</p>
+      <p>Sechs Bereiche, in denen technisch etwas eingerichtet werden muss – nicht organisatorisch beschlossen:</p>
       <ul>
-        <li><strong>Datenschutz beim Modellzugang:</strong> In den Einstellungen des genutzten LLMs prüfen und deaktivieren, ob Eingaben zu Trainingszwecken verwendet werden dürfen.</li>
-        <li><strong>API-Schlüssel niemals in Versionskontrolle (Git):</strong> Zugangsdaten gehören in Umgebungsvariablen, nicht in den Quellcode.</li>
-        <li><strong>Rechte gezielt vergeben:</strong> Einem KI-System nur die minimalen Zugriffsrechte einräumen, die für die jeweilige Aufgabe erforderlich sind – Lesen und Schreiben trennen, wo es möglich ist.</li>
-        <li><strong>Protokollierung automatisierter Prozesse:</strong> Was ein KI-Agentensystem ausführt, sollte nachvollziehbar sein – wer hat wann was initiiert.</li>
-        <li><strong>Lokales Hosting oder Container-Isolierung:</strong> Wer keine Daten nach außen geben möchte, betreibt sein Modell lokal oder in einem abgeschotteten Docker-Container.</li>
-        <li><strong>Auftragsverarbeitungsvertrag (AVV):</strong> Bei der Nutzung externer KI-Dienste im Unternehmenskontext ist ein AVV rechtlich erforderlich und sollte vor dem ersten produktiven Einsatz vorliegen.</li>
+        <li><strong>Netzwerkebene:</strong> Über Firewall oder Web-Proxy eine Positivliste freigegebener KI-Dienste definieren, alle übrigen sperren. Wichtig dabei: nicht nur die Hauptdomain, sondern auch die zugehörigen API-Endpunkte, sonst läuft der Zugriff über Umwege weiter.</li>
+        <li><strong>Datenbankebene:</strong> KI-Integrationen bekommen keinen Tabellenzugriff, sondern greifen ausschließlich über Sichten (Views) zu, die nur die fachlich benötigten Spalten und Zeilen enthalten. Schreibrechte nur dort, wo die Aufgabe sie zwingend erfordert – sonst Lesezugriff.</li>
+        <li><strong>Dateiebene:</strong> Für die Anbindung an Dokumente ein eigenes Freigabeverzeichnis anlegen, in das relevante Dokumente bewusst kopiert werden. Kein Zugriff auf gewachsene Laufwerksstrukturen, in denen sich über Jahre Personalakten, Verträge und Gehaltslisten angesammelt haben.</li>
+        <li><strong>Datenebene:</strong> Vor der Übergabe an ein externes Modell personenbezogene und sicherheitskritische Felder maskieren oder pseudonymisieren – Kundennummer statt Klarname, Platzhalter statt Bankverbindung. Das ist meist mit einer Transformationsschicht vor der Schnittstelle lösbar und schützt auch dann, wenn der Anbieter kompromittiert wird.</li>
+        <li><strong>Zugangsdaten:</strong> Je Integration ein eigener technischer Benutzer und ein eigener API-Schlüssel, nie ein geteilter. Schlüssel gehören in einen Secret-Speicher oder in Umgebungsvariablen, nicht in Skripte oder Konfigurationsdateien im Versionsverwaltungssystem. Wo der Anbieter Ausgabe- oder Ratenlimits je Schlüssel unterstützt, diese setzen – das begrenzt den Schaden bei Missbrauch.</li>
+        <li><strong>Modelleinstellungen:</strong> Im Konto des Anbieters die Nutzung von Eingaben für Modelltraining deaktivieren, Aufbewahrungsdauer der Konversationen auf das Minimum setzen, Administrationsrechte auf wenige Personen begrenzen.</li>
       </ul>
-      <p>Seit August 2024 gilt der EU AI Act schrittweise – mit weiteren Fristen im August 2026 und 2027. Für Unternehmen, die KI-Systeme einsetzen oder beauftragen, entstehen daraus konkrete Dokumentations- und Transparenzpflichten, die über den Datenschutz hinausgehen. Ein kurzer Compliance-Check lohnt sich.</p>
+      <p>Diese Punkte sind in wenigen Tagen umsetzbar und wirken unabhängig davon, wie sich die Bedrohungslage entwickelt.</p>
     `,
   },
   {
-    frage: "Was ist ein RAG-System, und wie kann es mir nützen?",
+    frage: "Meine Mitarbeitenden nutzen KI-Tools, die ich nie freigegeben habe – was tue ich?",
     antwortHtml: `
-      <p>Die meisten KI-Modelle kennen die Welt – aber nicht Ihr Unternehmen. Sie wurden auf öffentlichen Daten trainiert und wissen nichts von Ihrer internen Dokumentation, Ihren Prozesshandbüchern oder Ihrem aktuellen Produktkatalog. Genau diese Lücke schließt <strong>Retrieval-Augmented Generation (RAG)</strong>.</p>
-      <p>Ein RAG-System verbindet ein Sprachmodell mit einer Informationsabruf-Komponente: Bei jeder Anfrage ruft es gezielt Inhalte aus Ihren eigenen Datenquellen ab – etwa aus dem Firmen-Wiki, der Produktdatenbank oder dem Kundenservice-Handbuch – und legt diese dem Modell als Kontext vor. Die Antwort basiert dann auf echten, aktuellen Unternehmensdaten, nicht auf trainierten Verallgemeinerungen.</p>
-      <p>Typische Anwendungsfälle: interner Wissensassistent für Support und Vertrieb, Policy-Prüfung, Auswertung von PDF-Dokumenten, Durchsuchen von SharePoint- oder Confluence-Inhalten mit direkter Antwortgenerierung.</p>
-      <p>Der entscheidende Qualitätsfaktor liegt dabei im Retrieval selbst: Wie gut die Inhalte strukturiert, indiziert und abgerufen werden, bestimmt maßgeblich die Verlässlichkeit der Ausgabe. Viele Teams experimentieren mit Sprachmodellen – doch ohne Zugriff auf internes Wissen bleiben die Antworten generisch. RAG schließt diese Lücke und ermöglicht höhere Qualität, weniger Halluzinationen und bessere Nachvollziehbarkeit.</p>
+      <p>Zunächst: Das Verhalten ist normal und meist gut gemeint. Das Risiko entsteht nicht durch die Nutzung, sondern dadurch, dass niemand weiß, welche Daten in welches System fließen.</p>
+      <p>Reihenfolge, die sich in der Praxis bewährt:</p>
+      <ol>
+        <li><strong>Sichtbar machen:</strong> Die Proxy- oder Firewall-Protokolle der letzten vier Wochen auf Zugriffe zu bekannten KI-Diensten auswerten. Das Ergebnis zeigt, welche Tools tatsächlich genutzt werden und wie intensiv – die Grundlage für alles Weitere.</li>
+        <li><strong>Ersatz anbieten, bevor gesperrt wird:</strong> Eine freigegebene Alternative bereitstellen, die dieselbe Aufgabe erfüllt, mit Auftragsverarbeitungsvertrag und deaktiviertem Training. Wird nur gesperrt ohne Ersatz, verlagert sich die Nutzung auf private Geräte – und damit vollständig aus dem Blickfeld.</li>
+        <li><strong>Technisch begrenzen:</strong> Nicht freigegebene Dienste über den Proxy sperren. Auf verwalteten Geräten zusätzlich verhindern, dass Unternehmensdateien per Zwischenablage oder Upload in Browserfenster nicht freigegebener Dienste gelangen – dafür gibt es in gängigen Endpunktschutz- und Data-Loss-Prevention-Lösungen fertige Regelwerke.</li>
+        <li><strong>Verbindlich regeln:</strong> Eine kurze Nutzungsrichtlinie, die konkret benennt, welche Datenkategorien nie in ein externes KI-System dürfen – Personaldaten, Gesundheitsdaten, Vertragsentwürfe, Quellcode, Zugangsdaten. Zwei Seiten reichen, wenn sie konkret sind.</li>
+        <li><strong>Beim Austritt entziehen:</strong> Erteilte Berechtigungen für KI-Dienste, die auf Postfach, Kalender oder Dateiablage zugreifen, gehören in die Offboarding-Checkliste. Diese Berechtigungen laufen sonst weiter, auch wenn der Nutzerzugang gesperrt ist.</li>
+      </ol>
     `,
   },
   {
-    frage: "Wie lässt sich der Token-Verbrauch bei API-Nutzung reduzieren?",
+    frage: "Wie verhindere ich, dass meine Eingaben zum Training fremder KI-Modelle verwendet werden?",
     antwortHtml: `
-      <p>Wer KI-Modelle über die API anspricht, bezahlt pro Token – jede unnötige Information im Kontext kostet. Ein paar Grundsätze, die den Verbrauch spürbar senken:</p>
+      <p>In den meisten kommerziellen KI-Tools lässt sich das Trainings-Opt-out in den Konto- oder Admin-Einstellungen aktivieren – bei Business- und Enterprise-Tarifen ist es häufig sogar standardmäßig deaktiviert, bei kostenlosen Consumer-Zugängen dagegen oft aktiv, sofern nicht manuell abgeschaltet.</p>
+      <p>Wichtig ist die Unterscheidung zwischen Trainingsnutzung und Verarbeitung: Auch wenn Eingaben nicht trainiert werden, verarbeitet sie der Anbieter zur Beantwortung – auf Servern, deren Standort und Sicherheitsniveau je nach Anbieter variieren. Ein deaktiviertes Training schützt also vor Wiederauftauchen der Daten in künftigen Modellantworten, nicht automatisch vor jedem Datenschutzrisiko.</p>
+      <p>Wer volle Kontrolle braucht, kommt an zwei Punkten nicht vorbei: einem Auftragsverarbeitungsvertrag mit dem Anbieter und – bei besonders sensiblen Daten – der Prüfung, ob ein lokal betriebenes Modell die bessere Lösung ist.</p>
+    `,
+  },
+  {
+    frage: "Wie schütze ich mich vor Prompt-Injection-Angriffen auf meine KI-Systeme?",
+    antwortHtml: `
+      <p>Prompt-Injection bezeichnet den Versuch, ein KI-System über manipulierte Eingaben – etwa in einem hochgeladenen Dokument, einer E-Mail oder einer Webseite, die ein Agent liest – zu einem vom Nutzer nicht beabsichtigten Verhalten zu bewegen. Besonders kritisch wird das, sobald ein Agent nicht nur Text ausgibt, sondern Aktionen mit echten Systemzugriffen ausführt.</p>
+      <p>Wirksamer Schutz setzt an mehreren Ebenen gleichzeitig an, weil sich Prompt-Injection nicht durch eine einzelne Maßnahme zuverlässig verhindern lässt:</p>
       <ul>
-        <li><strong>Nur relevante Inhalte in den Kontext laden:</strong> Nicht alle verfügbaren Dokumente auf einmal übergeben, sondern gezielt das, was für die aktuelle Aufgabe benötigt wird.</li>
-        <li><strong>Korrekturen auf betroffene Abschnitte beschränken:</strong> Statt die gesamte Datei zu wiederholen, nur den geänderten Teil zurückgeben.</li>
-        <li><strong>Schritte zusammenfassen, wo sinnvoll:</strong> Mehrere zusammenhängende Teilaufgaben in einem einzigen Aufruf bündeln, statt sie sequenziell abzufragen.</li>
-        <li><strong>Tests nur ausführen, wenn das Ergebnis den nächsten Schritt beeinflusst:</strong> Kein blindes Validieren, wenn keine Entscheidung davon abhängt.</li>
-        <li><strong>Caching nutzen:</strong> Häufig wiederholte Kontextanteile (z.B. System-Prompts) lassen sich bei einigen Anbietern via Prompt Caching zu deutlich reduzierten Kosten wiederverwenden.</li>
+        <li><strong>Rechteebene:</strong> Geringstmögliche Berechtigung, wie bereits bei der Agenten-Einrichtung beschrieben. Selbst ein erfolgreich manipulierter Agent kann nur das anrichten, wozu sein technischer Zugang reicht.</li>
+        <li><strong>Trennung von Anweisung und Inhalt:</strong> Eingaben aus externen Quellen (Dokumente, E-Mails, Webseiten, Suchergebnisse) technisch klar als „zu verarbeitender Inhalt" kennzeichnen, nicht als Anweisung. Viele Plattformen bieten dafür eigene Auszeichnungsmechanismen, die eingebettete Befehle in fremden Inhalten entschärfen.</li>
+        <li><strong>Freigabeschritt vor kritischen Aktionen:</strong> Jede Aktion mit finanzieller, rechtlicher oder nach außen wirkender Konsequenz durchläuft einen Freigabeschritt – unabhängig davon, wodurch der Agent zu dieser Aktion kam.</li>
+        <li><strong>Eingrenzung der Werkzeuge:</strong> Ein Agent, der nur Inhalte lesen und zusammenfassen soll, bekommt keinen technischen Zugriff auf E-Mail-Versand oder Zahlungsauslösung – auch nicht „für den Notfall". Was technisch nicht erreichbar ist, kann nicht missbraucht werden.</li>
+        <li><strong>Protokollierung und Stichprobenprüfung:</strong> Auffällige Abweichungen vom erwarteten Verhalten – ungewöhnliche Zielsysteme, ungewöhnliche Reihenfolge – lassen sich nur erkennen, wenn das fachliche Journal regelmäßig eingesehen wird.</li>
       </ul>
-      <p>Neben der Kontextgröße beeinflusst die Modellwahl den Kostenfaktor erheblich. Für viele Routineaufgaben – Zusammenfassungen, Klassifikationen, einfache Transformationen – reichen kleinere, günstigere Modelle vollständig aus. Der reflexartige Griff zum jeweils leistungsstärksten Modell ist selten wirtschaftlich.</p>
+      <p>Ein hundertprozentiger Schutz existiert nach heutigem Stand nicht – das Ziel ist, den möglichen Schaden durch enge Rechte und Freigabeschritte zu begrenzen, nicht den Angriff selbst zu verhindern.</p>
     `,
   },
   {
-    frage: "Welche KI-Tools funktionieren sofort, ohne aufwendige Konfiguration?",
+    frage: "Gilt der EU AI Act jetzt schon für mein Unternehmen, oder wurden die Fristen verschoben?",
     antwortHtml: `
-      <p>Für den schnellen Einstieg ohne Installationsaufwand:</p>
+      <p>Teilweise verschoben, teilweise nicht – hier verwechseln viele Unternehmen zwei unterschiedliche Fristen. Am 27. Juli 2026 trat die Änderungsverordnung „Digital Omnibus" (EU 2026/1744) in Kraft und verschob die vollständigen Pflichten für Hochrisiko-KI-Systeme (Anhang III, etwa in Personalauswahl oder Kreditwürdigkeitsprüfung) vom 2. August 2026 auf den 2. Dezember 2027.</p>
+      <p>Nicht verschoben wurden dagegen die Transparenzpflichten nach Artikel 50: Wer einen Chatbot betreibt oder KI-generierte Inhalte veröffentlicht, muss dies seit dem 2. August 2026 kennzeichnen. Auch die Pflichten für KI-Modelle mit allgemeinem Verwendungszweck gelten unverändert seit August 2025.</p>
+      <p>Für die meisten Mittelstandsunternehmen ohne Hochrisiko-Anwendung heißt das: Die Kennzeichnungspflicht betrifft Sie schon jetzt, die aufwendigeren Hochrisiko-Pflichten erst später.</p>
+    `,
+  },
+  {
+    frage: "Welche Bußgelder drohen bei Verstößen gegen den EU AI Act?",
+    antwortHtml: `
+      <p>Die Höhe richtet sich nach der Art des Verstoßes. Verbotene KI-Praktiken (Artikel 5, etwa manipulative Systeme) werden mit bis zu 35 Millionen Euro oder 7 Prozent des weltweiten Jahresumsatzes geahndet – der jeweils höhere Betrag gilt. Verstöße gegen Hochrisiko- oder Betreiberpflichten liegen bei bis zu 15 Millionen Euro oder 3 Prozent, Falschangaben gegenüber Behörden bei bis zu 7,5 Millionen Euro oder 1 Prozent, hier mit einer Deckelung für kleine und mittlere Unternehmen.</p>
+      <p>Für die praktische Einordnung: Die meisten Mittelstandsanwendungen – Chatbots, interne Assistenten, Textgenerierung – fallen nicht unter die Hochrisiko-Kategorie und damit auch nicht unter die höchsten Bußgeldstufen. Die Kennzeichnungspflicht nach Artikel 50 bleibt aber für praktisch jedes Unternehmen mit KI-Einsatz relevant.</p>
+    `,
+  },
+  {
+    frage: "Muss ich KI-generierte Inhalte auf meiner Website kennzeichnen?",
+    antwortHtml: `
+      <p>Ja, seit dem 2. August 2026 gilt die Kennzeichnungspflicht nach Artikel 50 EU AI Act für synthetische Inhalte wie KI-generierte Texte, Bilder, Videos oder Audiodateien. Diese Pflicht wurde durch die Fristverschiebung für Hochrisiko-Systeme nicht berührt und gilt unabhängig von der Unternehmensgröße.</p>
+      <p>Die genaue technische Umsetzung, etwa maschinenlesbare Kennzeichnung für generierte Bilder, war Mitte 2026 noch in Abstimmung zwischen EU-Institutionen. Für Text- und Chatbot-Anwendungen reicht in der Praxis meist ein klarer Hinweis, dass Inhalte mithilfe von KI erstellt wurden.</p>
+    `,
+  },
+  {
+    frage: "Brauche ich für ChatGPT, Copilot & Co. einen Auftragsverarbeitungsvertrag?",
+    antwortHtml: `
+      <p>In aller Regel ja, sobald personenbezogene Daten im Spiel sind – etwa Kundennamen in einem Support-Chatbot oder Bewerberdaten in einem HR-Tool. Die gängigen Business- und Enterprise-Tarife großer Anbieter stellen einen Auftragsverarbeitungsvertrag standardmäßig bereit; bei kostenlosen Consumer-Zugängen fehlt er meist, was diese für den Unternehmenseinsatz mit personenbezogenen Daten ungeeignet macht.</p>
+      <p>Ein Auftragsverarbeitungsvertrag allein löst nicht jedes Problem: Er regelt die vertragliche Verantwortung, ändert aber nichts daran, wohin die Daten technisch fließen. Bei US-Anbietern bleibt deshalb zusätzlich die Frage relevant, auf welcher Rechtsgrundlage die Datenübermittlung in die USA erfolgt.</p>
+    `,
+  },
+  {
+    frage: "Welche KI-Anwendungen bringen unabhängig von der Branche den größten Hebel?",
+    antwortHtml: `
+      <p>Drei Kategorien wiederholen sich über nahezu alle Branchen hinweg, weil sie an einem verbreiteten Engpass ansetzen – nicht an einer Abteilungsbesonderheit. Erstens: Wissensarbeit, die auf verstreuten internen Dokumenten basiert – hier schafft ein RAG-gestützter Assistent (Retrieval-Augmented Generation) Zugriff auf Wissen, das bislang nur in Köpfen einzelner Mitarbeitender steckte. Zweitens: strukturierte Texterstellung mit hohem Wiederholungsanteil – Angebote, Standardantworten, Protokolle. Drittens: Recherche- und Analyseaufgaben, bei denen ein erster KI-Entwurf die eigentliche Denkarbeit nicht ersetzt, aber den Startpunkt beschleunigt.</p>
+      <p>Der gemeinsame Nenner: Diese drei sparen keine Zeit bei einer einzelnen Person in einer einzelnen Abteilung, sondern reduzieren einen Engpass, den fast jedes Unternehmen hat.</p>
+    `,
+  },
+  {
+    frage: "Brauche ich für jede Aufgabe ein eigenes KI-Tool, oder gibt es eine Komplettlösung?",
+    antwortHtml: `
+      <p>Eine Universallösung gibt es nicht, aber die Zahl nötiger Verträge ist deutlich kleiner als die Zahl der Anwendungsfälle. In der Praxis tragen drei Schichten den Großteil des Bedarfs:</p>
       <ul>
-        <li><strong>Wispr Flow</strong> – KI-gestützte Spracheingabe, die in jeder App funktioniert. Man spricht, der Text erscheint formatiert an der Cursorposition – in Gmail, Slack, Notion oder jedem Browserfenster. Keine rohe Transkription, sondern kontextsensitiv aufbereiteter Text.</li>
-        <li><strong>NotebookLM</strong> (Google) – Eigene Dokumente hochladen und direkt damit arbeiten: Fragen stellen, Zusammenfassungen erstellen, Audio-Übersichten generieren. Antworten basieren ausschließlich auf den hochgeladenen Quellen, was Halluzinationen deutlich reduziert.</li>
-        <li><strong>Gamma</strong> – Präsentationen aus Text oder Dokumenten generieren, ohne PowerPoint anzufassen.</li>
-        <li><strong>Gemini</strong> (Google) – Neben der Textarbeit mit nativer Bildgenerierung direkt im Browser, ohne zusätzliche Tools.</li>
-        <li><strong>Bliro</strong> – Transkription und strukturierte Zusammenfassung von Meetings, ohne dass eine App am Gespräch teilnehmen muss.</li>
+        <li><strong>Eine Sprachmodell-Plattform</strong> für alle Aufgaben rund um Text, Analyse, Zusammenfassung und Recherche – das ist der größte Anteil der Alltagsfälle und braucht in der Regel nur einen Vertrag für das gesamte Unternehmen.</li>
+        <li><strong>Die KI-Funktionen in bereits vorhandener Software</strong> – ERP, Buchhaltung, CRM und Kommunikationsplattformen bringen zunehmend eigene KI-Funktionen mit. Diese sind oft die bessere Wahl als ein Zusatztool, weil die Daten das System nicht verlassen und keine neue Schnittstelle entsteht.</li>
+        <li><strong>Eine Automatisierungs- oder Workflow-Plattform</strong>, die vorhandene Systeme verbindet und wiederkehrende Abläufe ausführt.</li>
       </ul>
+      <p>Spezialwerkzeuge lohnen sich erst, wenn eine Aufgabe hohes Volumen hat und die Allzwecklösung dort messbar schlechter abschneidet – typischerweise bei Transkription, Bildverarbeitung oder fachspezifischer Dokumentenprüfung.</p>
+      <p>Der Abhängigkeitspunkt ist berechtigt. Eine praktikable Gegenmaßnahme: Die Verbindung zu den eigenen Systemen nicht im KI-Tool selbst aufbauen, sondern in einer Zwischenschicht, die austauschbar ist. Dann kostet ein Anbieterwechsel die Anpassung einer Schnittstelle statt den Neubau aller Abläufe.</p>
     `,
   },
   {
-    frage: "Wie erkenne ich, ob ein KI-Projekt bei uns wirklich Sinn ergibt, oder ob wir einem Trend folgen?",
+    frage: "Wie deckele ich den Tokenverbrauch und begrenze ihn je Mitarbeiter?",
     antwortHtml: `
-      <p>Die ehrlichste Frage zuerst: Gibt es ein konkretes Problem, das heute manuell gelöst wird, viel Zeit kostet und sich durch strukturierte Automatisierung verbessern ließe? Wenn ja – dann lohnt die Prüfung. Wenn nicht – dann ist KI eine Lösung auf der Suche nach einem Problem.</p>
-      <p>Ein sinnvoller erster Schritt ist kein Pilotprojekt, sondern eine nüchterne Bestandsaufnahme: Wo entstehen Reibungsverluste durch manuelle Informationsarbeit? Welche Entscheidungen basieren auf Daten, die regelmäßig aufbereitet werden müssen? Wo wird Wissen produziert, das anschließend nicht auffindbar bleibt?</p>
-      <p>Ich helfe Ihnen, diese Fragen strukturiert zu beantworten – ohne Annahmen und ohne Voreinstellung in Richtung einer bestimmten Technologie.</p>
+      <p>Der Verbrauch entsteht an drei Stellen, und nur an einer davon greifen Limits automatisch:</p>
+      <ul>
+        <li><strong>Nutzer-Abos:</strong> Feste Monatsgebühr je Person, der Anbieter begrenzt die Nutzung selbst. Kostenrisiko gleich null, dafür kein Einfluss auf die Nutzungsmenge. Für die meisten Mitarbeitenden der passende Weg.</li>
+        <li><strong>Schnittstellenzugriff (API):</strong> Abrechnung nach tatsächlichem Verbrauch, hier entsteht das Kostenrisiko. Große Anbieter erlauben im Administrationsbereich Monatsbudgets je Projekt und je Schlüssel, Warnschwellen bei prozentualer Ausschöpfung und Ratenlimits. Praktische Umsetzung: je Abteilung oder je Automatisierung ein eigener Schlüssel mit eigenem Budget – dann trifft ein fehlerhafter Ablauf nicht das Gesamtbudget, und die Abrechnung ist verursachergerecht.</li>
+        <li><strong>Automatisierte Abläufe:</strong> Der größte unbemerkte Kostentreiber, weil ein fehlerhafter Ablauf tausendfach durchlaufen kann. Gegenmittel: maximale Durchlaufzahl je Zeitraum in der Plattform begrenzen, Wiederholungsversuche bei Fehlern auf zwei bis drei beschränken, Zeitsteuerung statt Dauerabfrage.</li>
+      </ul>
+      <p>Drei Hebel, die unabhängig von Limits wirken: für einfache Aufgaben ein kleineres Modell einsetzen statt reflexhaft das leistungsfähigste; nur die tatsächlich benötigten Dokumente übergeben statt ganzer Ablagen; wiederkehrende Anweisungsteile über die Zwischenspeicherung des Anbieters wiederverwenden, die bei mehreren Anbietern deutlich günstiger abgerechnet wird.</p>
+      <p>Für die Kostenkontrolle je Person gilt: Über die Schnittstelle ist sie technisch sauber lösbar, in Nutzer-Abos nicht – dort ist die Obergrenze bereits der Abo-Preis.</p>
     `,
   },
   {
-    frage: "Wie erkläre ich meiner Geschäftsführung den Nutzen von KI, ohne in Hype-Sprache zu verfallen?",
+    frage: "Gibt es eine Plattform, über die ich mehrere Sprachmodelle nutzen kann, ohne für jedes ein eigenes Abo abzuschließen?",
     antwortHtml: `
-      <p>Das ist eine der unterschätztesten Herausforderungen in der Praxis. Führungskräfte reagieren auf Kosteneinsparung, Risikominimierung und Wettbewerbspositionierung – nicht auf Begriffe wie „Transformation" oder „Paradigmenwechsel".</p>
-      <p>Überzeugender ist ein konkretes Rechenbeispiel: Ein Prozess, der heute 4 Stunden pro Woche bindet und sich auf 30 Minuten reduzieren lässt, erzeugt in einem Jahr knapp 180 Stunden Kapazität. Was kostet das, was bringt es?</p>
-      <p>Ich unterstütze bei der Aufbereitung solcher Business-Cases – sachlich, belastbar und auf die Sprache des Managements abgestimmt.</p>
+      <p>Ja, drei Ansätze – der Unterschied liegt darin, wo Ihre Daten verarbeitet werden und wie viel Verwaltung mitgeliefert wird:</p>
+      <ul>
+        <li><strong>Aggregatoren</strong> (Beispiele: OpenRouter, LiteLLM): Bündeln per Schnittstelle den Zugriff auf Dutzende Modelle verschiedener Anbieter über einen einzigen Zugangsschlüssel und ein einheitliches Anfrageformat – ein Modellwechsel bedeutet dann eine geänderte Einstellung statt umgebauter Software. Gedacht für die technische Anbindung in eigene Abläufe; Nutzerverwaltung und Endnutzer-Oberfläche bringen sie nicht mit. Bei gehosteten Anbietern wie OpenRouter fällt zusätzlich zum Anbieterpreis ein Vermittlungsaufschlag an, LiteLLM ist quelloffen und lässt sich selbst betreiben. Zu prüfen ist in beiden Fällen der Verarbeitungsort und ob ein Auftragsverarbeitungsvertrag angeboten wird – der Aggregator sitzt zwischen Ihnen und dem Modellanbieter.</li>
+        <li><strong>Europäische Unternehmensplattformen</strong> (Beispiele: Langdock, InnoGPT): Legen eine einheitliche Oberfläche über mehrere Modelle und ergänzen sie um Nutzerverwaltung, Rechtevergabe, gemeinsame Vorlagen und Auftragsverarbeitungsvertrag. Langdock etwa bietet Zugang zu über 40 Modellen bei Datenhaltung in Frankfurt, ISO-27001-Zertifizierung und vertraglich zugesichertem Ausschluss der Trainingsnutzung; der Business-Tarif liegt bei 20 Euro je Nutzer und Monat bei jährlicher Zahlung. Für DSGVO-sensible Umgebungen meist der passendste Weg. Zu beachten: EU-Hosting der Plattform bedeutet nicht automatisch EU-Verarbeitung des dahinterliegenden Modells – das ist je Modell getrennt zu prüfen.</li>
+        <li><strong>Eigener Betrieb</strong> (Beispiele: Open WebUI, Ollama für lokal laufende Modelle): Eine selbst betriebene Oberfläche, die per Schnittstelle mehrere Anbieter anspricht und zusätzlich lokal laufende offene Modelle einbinden kann. Höchste Kontrolle, dafür Betriebsaufwand und eigene Serverleistung.</li>
+      </ul>
+      <p>Für den Mittelstand ist die zweite Variante meist der beste Kompromiss: ein Vertrag, geregelte Verantwortlichkeiten, freie Modellwahl – und der Wechsel des Modells wird zur Einstellung statt zum Projekt.</p>
     `,
   },
   {
-    frage: "Was ist der Unterschied zwischen einem KI-Tool, das ich sofort nutzen kann, und einer KI-Integration in meine bestehenden Systeme?",
+    frage: "Was ist ein KI-Agent, und was kann er anders als ein Chatbot?",
     antwortHtml: `
-      <p>Beides hat seinen Platz – aber sie lösen unterschiedliche Probleme.</p>
-      <p>Fertige Tools wie ChatGPT, Gemini oder Copilot sind in Minuten einsatzbereit und eignen sich für individuelle Aufgaben: Texte schreiben, Dokumente zusammenfassen, Recherchen führen. Sie setzen keine technische Infrastruktur voraus.</p>
-      <p>Eine Integration – etwa ein RAG-System auf Basis Ihrer internen Wissensbasis, ein KI-gestützter Schritt in einem bestehenden Workflow oder ein API-angebundener Assistent – greift tiefer: Sie verbindet die KI mit Ihren eigenen Daten, Prozessen und Systemen. Das erfordert Planung, technische Umsetzung und klare Zuständigkeiten. Dafür entsteht echter Mehrwert, der über die individuelle Produktivitätsverbesserung hinausgeht.</p>
-      <p>Der richtige Einstiegspunkt hängt davon ab, wo Ihre Organisation heute steht.</p>
+      <p>Ein klassischer Chatbot beantwortet Fragen und liefert Text – ein KI-Agent führt darüber hinaus eigenständig mehrere Arbeitsschritte aus, um ein Ziel zu erreichen: Informationen aus verschiedenen Quellen zusammentragen, Werkzeuge oder andere Programme aufrufen, Zwischenergebnisse bewerten und die nächsten Schritte selbst planen.</p>
+      <p>Der Unterschied liegt also nicht in der Sprachqualität, sondern im Grad der Selbstständigkeit: Ein Agent kann etwa eine Rechnungsprüfung komplett durchführen – Beleg lesen, mit Bestelldaten abgleichen, Abweichung markieren –, während ein klassischer Chatbot bei jedem Schritt eine neue Anfrage braucht.</p>
+      <p>Der Praxisnutzen steigt mit der Selbstständigkeit, aber auch das Risiko: Ein Agent braucht klar begrenzte Zugriffsrechte und eine nachvollziehbare Protokollierung – sonst wird aus Effizienzgewinn schnell ein Kontrollverlust.</p>
     `,
   },
   {
-    frage: "Wie gehe ich mit dem Thema KI-Halluzinationen in unternehmenskritischen Prozessen um?",
+    frage: "Wo richte ich einen KI-Agenten ein, und welche Zugänge braucht er?",
     antwortHtml: `
-      <p>Sprachmodelle erfinden Antworten – nicht aus bösem Willen, sondern weil sie statistisch plausiblen Text erzeugen, nicht faktisch verifizierten. Das ist keine vorübergehende Kinderkrankheit, sondern eine strukturelle Eigenschaft dieser Technologie.</p>
-      <p>In der Praxis bedeutet das: KI eignet sich sehr gut für Aufgaben, bei denen Fehler tolerierbar oder leicht erkennbar sind (Erstentwürfe, Zusammenfassungen, Klassifikationen). Sie eignet sich schlecht als alleinige Entscheidungsinstanz in Kontexten, in denen Fehler folgenreich sind – es sei denn, ein Mensch prüft das Ergebnis.</p>
-      <p>Technisch lässt sich die Halluzinationsrate durch RAG-Architekturen (Antworten werden auf verifizierten Quellen geerdet) und durch Retrieval mit Quellenzitation deutlich reduzieren. Eine vollständige Eliminierung ist nicht möglich.</p>
+      <p>Zwei übliche Orte, mit unterschiedlichen Konsequenzen:</p>
+      <ul>
+        <li><strong>Direkt beim Sprachmodell-Anbieter:</strong> schnell eingerichtet, gut für Aufgaben rund um Text und Dokumente. Schwächer, sobald mehrere Fremdsysteme beteiligt sind.</li>
+        <li><strong>In einer Automatisierungsplattform</strong> (z. B. Make, n8n): der übliche Weg, wenn mehrere Systeme zusammenspielen. Der Ablauf ist dort sichtbar modelliert, fehlerhafte Schritte lassen sich einzeln wiederholen, das Modell wird nur für die Denkarbeit aufgerufen.</li>
+      </ul>
+      <p>Die Zugänge zu Ihren Systemen entstehen auf drei Wegen, in dieser Vorzugsreihenfolge:</p>
+      <ol>
+        <li><strong>Schnittstelle des Zielsystems (API):</strong> Für den Agenten ein eigener technischer Benutzer mit eigenen Zugangsdaten und Rechten, die genau seiner Aufgabe entsprechen – ein Agent, der Rechnungen prüfen soll, braucht Leserechte auf Belege und Bestellungen, aber kein Recht, Zahlungen auszulösen.</li>
+        <li><strong>Model Context Protocol (MCP):</strong> ein standardisiertes Verbindungsprotokoll, über das Modelle auf Werkzeuge und Datenquellen zugreifen. Vorteil: die Rechtevergabe ist an einer Stelle gebündelt statt in jeder Einzelintegration.</li>
+        <li><strong>Datenbanksicht mit Lesezugriff:</strong> wo es keine brauchbare Schnittstelle gibt, aber die Datenbank zugänglich ist. Als letzte Wahl bei Altsystemen ohne Schnittstelle bleibt die Oberflächenautomatisierung – funktioniert, bricht aber bei jeder Oberflächenänderung.</li>
+      </ol>
+      <p>Zwei Regeln, unabhängig vom Weg: Kein Agent nutzt den Zugang eines Menschen – sonst lässt sich im Nachhinein nicht unterscheiden, wer gehandelt hat. Und jede Aktion mit finanzieller oder rechtlicher Wirkung erhält eine Betragsgrenze oder einen Freigabeschritt, bevor sie ausgeführt wird.</p>
     `,
   },
   {
-    frage: "Wie binde ich externe KI-Berater sinnvoll ein – und ab wann lohnt sich das?",
+    frage: "Wie kontrolliere ich, was ein KI-Agent tatsächlich getan hat?",
     antwortHtml: `
-      <p>Ein externer Berater bringt Wert in zwei Konstellationen: wenn intern das Einordnungswissen fehlt (was ist technisch möglich, was ist realistisch, was ist Hype?), oder wenn konkrete Umsetzungskompetenz gesucht wird, die sich nicht lohnt, dauerhaft aufzubauen.</p>
-      <p>Was er nicht ersetzen kann: das eigene Prozesswissen, die Kenntnis der Unternehmenskultur und die Bereitschaft der Organisation, Dinge tatsächlich zu verändern.</p>
-      <p>Ein sinnvolles Einstiegsformat ist ein begrenztes Orientierungsgespräch ohne Beauftragungsdruck – mit dem Ziel, eine realistische Einschätzung zu erhalten, ob und wo externer Support Hebel erzeugt. Ich biete das an, und ich sage Ihnen auch, wenn ich der Ansicht bin, dass Sie es zunächst ohne Berater tun können.</p>
+      <p>Nicht über den Agenten selbst – ein System, das sein eigenes Handeln protokolliert, ist als Nachweis wertlos. Die Kontrolle muss an Stellen ansetzen, die der Agent nicht verändern kann. Drei Ebenen, die zusammen ein belastbares Bild ergeben:</p>
+      <ul>
+        <li><strong>Ausführungsprotokoll der Automatisierungsplattform</strong> (z. B. Make, n8n): Jeder Durchlauf wird mit Zeitstempel, Eingangsdaten, aufgerufenen Systemen und Ergebnis protokolliert. Das beantwortet: Was wurde angestoßen und ist es durchgelaufen?</li>
+        <li><strong>Protokoll im Zielsystem:</strong> Buchhaltung, ERP und Warenwirtschaft führen ihre eigene Änderungshistorie. Weil der Agent einen eigenen technischen Benutzer verwendet, lassen sich seine Buchungen dort nach Benutzer filtern – die revisionssichere Spur, unabhängig von der KI-Plattform. Das ist der Hauptgrund für die Regel „kein geteilter Zugang".</li>
+        <li><strong>Fachliches Journal:</strong> Am Ende des Workflows in der Automatisierungsplattform hängt ein weiterer Baustein, der eine Zeile in eine Tabelle schreibt – Datum, Vorgang, Belegnummer, Entscheidung, Betrag. Dieser Baustein entnimmt die tatsächlichen Werte aus dem Durchlauf selbst, nicht einer vom Modell formulierten Zusammenfassung – deshalb ist das Journal ein Nachweis, keine Selbstauskunft.</li>
+      </ul>
+      <p>Für die Human-in-the-Loop-Kontrolle kommt ein vierter Baustein dazu: Aktionen mit Außenwirkung – Zahlung, Bestellung, Kundenkommunikation – laufen nicht direkt durch, sondern erzeugen einen Freigabeeintrag. Praktikable Wege dafür: Die Automatisierungsplattform hält den Durchlauf an und schickt eine Nachricht mit Freigabe- und Ablehnen-Schaltfläche in Teams, Slack oder per E-Mail; oder der Vorgang wird als Datensatz in einer Freigabetabelle angelegt, die der Freigebende zyklisch prüft; oder das Zielsystem selbst übernimmt die Freigabe, indem der Agent die Zahlung nur als vorerfassten Beleg anlegt und die Freigabe im gewohnten Buchhaltungsprozess erfolgt. Tagesgeschäft unterhalb definierter Schwellen kann durchlaufen und wird stichprobenartig über das Journal geprüft.</p>
     `,
   },
 ];
